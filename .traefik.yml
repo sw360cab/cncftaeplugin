@@ -1,0 +1,9 @@
+displayName: UID Demo
+type: middleware
+
+import: github.com/sw360cab/cncftaeplugin
+
+summary: '[Demo] Inject Header for CNCF'
+
+testData:
+  HeaderName: "X-Traefik-Test"
