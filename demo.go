@@ -1,4 +1,4 @@
-package uiddemo
+package cncftaeplugin
 
 import (
   "fmt"

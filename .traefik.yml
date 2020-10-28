@@ -1,4 +1,4 @@
-displayName: UID Demo
+displayName: CNCF Tae Demo
 type: middleware
 
 import: github.com/sw360cab/cncftaeplugin
