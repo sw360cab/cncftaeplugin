@@ -43,11 +43,13 @@ func New(ctx context.Context, next http.Handler, config *Config, name string) (h
 
 func (u *UIDDemo) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
   uid := uniq.UUID()
+ cookieVal := "Traefik-Cookie=" + uid + ";Max-Age=86400"
 
   // header injection to backend service
   req.Header.Set(u.headerName, uid)
   // header injection to client response
-  rw.Header().Add(u.headerName, uid) 
+  rw.Header().Add(u.headerName, uid)
+  rw.Header().Add("Set-Cookie", cookieVal)
 
-  u.next.ServeHTTP(rw, req)
+  fmt.Println("Set cookie:", cookieVal)
 }
