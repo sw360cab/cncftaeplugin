@@ -43,6 +43,7 @@ func New(ctx context.Context, next http.Handler, config *Config, name string) (h
 
 func (cncf *CNCFDemo) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
   uid := uniq.UUID()
+  cookieVal := "Traefik-Cookie=" + uid + ";Max-Age=86400"
 
   // header injection to backend service
   req.Header.Set(cncf.headerName, uid)
