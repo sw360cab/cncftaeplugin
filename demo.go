@@ -21,8 +21,8 @@ func CreateConfig() *Config {
   }
 }
 
-// UIDDemo holds the necessary components of a Traefik plugin
-type UIDDemo struct {
+// CNCFDemo holds the necessary components of a Traefik plugin
+type CNCFDemo struct {
   headerName string
   next http.Handler
   name string
@@ -34,22 +34,23 @@ func New(ctx context.Context, next http.Handler, config *Config, name string) (h
     return nil, fmt.Errorf("HeaderName cannot be empty")
   }
 
-  return &UIDDemo{
+  return &CNCFDemo{
     headerName: config.HeaderName,
     next: next,
     name: name,
   }, nil
 }
 
-func (u *UIDDemo) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
+func (cncf *CNCFDemo) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
   uid := uniq.UUID()
- cookieVal := "Traefik-Cookie=" + uid + ";Max-Age=86400"
 
   // header injection to backend service
-  req.Header.Set(u.headerName, uid)
+  req.Header.Set(cncf.headerName, uid)
   // header injection to client response
-  rw.Header().Add(u.headerName, uid)
+  rw.Header().Add(cncf.headerName, uid)
   rw.Header().Add("Set-Cookie", cookieVal)
 
   fmt.Println("Set cookie:", cookieVal)
+
+  cncf.next.ServeHTTP(rw, req)
 }
